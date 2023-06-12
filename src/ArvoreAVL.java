@@ -1,17 +1,17 @@
 public class ArvoreAVL {  No raiz;
-
+    //responsável por verificar se o no passado como parâmetro é nulo
     int altura(No no) {
         if (no == null)
             return 0;
         return no.altura;
     }
-
+    //calcula o fator balanceamento de um nó na árvore
     int fatorBalanceamento(No no) {
         if (no == null)
             return 0;
         return altura(no.esquerda) - altura(no.direita);
     }
-
+    //
     No rotacaoDireita(No y) {
         No x = y.esquerda;
         No T2 = x.direita;
