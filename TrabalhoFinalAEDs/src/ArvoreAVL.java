@@ -1,17 +1,18 @@
-public class ArvoreAVL {  No raiz;
-    //responsável por verificar se o no passado como parâmetro é nulo
+public class ArvoreAVL {
+    No raiz;
+
     int altura(No no) {
         if (no == null)
             return 0;
         return no.altura;
     }
-    //calcula o fator balanceamento de um nó na árvore
+
     int fatorBalanceamento(No no) {
         if (no == null)
             return 0;
         return altura(no.esquerda) - altura(no.direita);
     }
-    //
+
     No rotacaoDireita(No y) {
         No x = y.esquerda;
         No T2 = x.direita;
@@ -41,9 +42,9 @@ public class ArvoreAVL {  No raiz;
         if (no == null)
             return (new No(palavra));
 
-        if (palavra.nome.compareToIgnoreCase(no.palavra.nome) < 0)
+        if (palavra.palavra.compareToIgnoreCase(no.palavra.palavra) < 0)
             no.esquerda = inserir(no.esquerda, palavra);
-        else if (palavra.nome.compareToIgnoreCase(no.palavra.nome) > 0)
+        else if (palavra.palavra.compareToIgnoreCase(no.palavra.palavra) > 0)
             no.direita = inserir(no.direita, palavra);
         else {
             no.palavra.contador++;
@@ -54,18 +55,18 @@ public class ArvoreAVL {  No raiz;
 
         int fator = fatorBalanceamento(no);
 
-        if (fator > 1 && palavra.nome.compareToIgnoreCase(no.esquerda.palavra.nome) < 0)
+        if (fator > 1 && palavra.palavra.compareToIgnoreCase(no.esquerda.palavra.palavra) < 0)
             return rotacaoDireita(no);
 
-        if (fator < -1 && palavra.nome.compareToIgnoreCase(no.direita.palavra.nome) > 0)
+        if (fator < -1 && palavra.palavra.compareToIgnoreCase(no.direita.palavra.palavra) > 0)
             return rotacaoEsquerda(no);
 
-        if (fator > 1 && palavra.nome.compareToIgnoreCase(no.esquerda.palavra.nome) > 0) {
+        if (fator > 1 && palavra.palavra.compareToIgnoreCase(no.esquerda.palavra.palavra) > 0) {
             no.esquerda = rotacaoEsquerda(no.esquerda);
             return rotacaoDireita(no);
         }
 
-        if (fator < -1 && palavra.nome.compareToIgnoreCase(no.direita.palavra.nome) < 0) {
+        if (fator < -1 && palavra.palavra.compareToIgnoreCase(no.direita.palavra.palavra) < 0) {
             no.direita = rotacaoDireita(no.direita);
             return rotacaoEsquerda(no);
         }
@@ -79,7 +80,7 @@ public class ArvoreAVL {  No raiz;
 
         int contador = 0;
 
-        if (no.palavra.nome.equalsIgnoreCase(palavra)) {
+        if (no.palavra.palavra.equalsIgnoreCase(palavra)) {
             contador++;
         }
 
@@ -93,11 +94,11 @@ public class ArvoreAVL {  No raiz;
             contarPalavras(no.esquerda, lista);
 
             if (no.palavra.contador > 1) {
-                lista.inserir(no.palavra);
+                lista.AdicionarPalavra(no.palavra);
             } else {
-                no.palavra.contador = contarPalavrasRepetidas(no, no.palavra.nome);
+                no.palavra.contador = contarPalavrasRepetidas(no, no.palavra.palavra);
                 if (no.palavra.contador > 1) {
-                    lista.inserir(no.palavra);
+                    lista.AdicionarPalavra(no.palavra);
                 }
             }
 
@@ -115,8 +116,8 @@ public class ArvoreAVL {  No raiz;
         if (no != null) {
             atualizarListaDupla(no.esquerda, lista);
 
-            if (no.palavra.contador > 1) {
-                lista.inserir(no.palavra);
+            if (no.palavra.contador >= 1) {
+                lista.AdicionarPalavra(no.palavra);
             }
 
             atualizarListaDupla(no.direita, lista);
@@ -126,7 +127,7 @@ public class ArvoreAVL {  No raiz;
     void inOrder(No no) {
         if (no != null) {
             inOrder(no.esquerda);
-            System.out.println(no.palavra.nome + " (" + no.palavra.contador + ")");
+            System.out.println(no.palavra.palavra + " (" + no.palavra.contador + ")");
             inOrder(no.direita);
         }
     }
