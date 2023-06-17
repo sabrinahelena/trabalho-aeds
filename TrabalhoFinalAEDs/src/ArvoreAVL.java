@@ -1,39 +1,55 @@
+
 public class ArvoreAVL {
+    //Um objeto do tipo No
     No raiz;
 
-    int altura(No no) {
+    //responsável por verificar se o no passado como parâmetro é nulo
+    int Altura(No no) {
+        //Se for null não há mais nós na árvore, sendo a altura 0
         if (no == null)
             return 0;
+        //niveis
         return no.altura;
     }
-
-    int fatorBalanceamento(No no) {
+    /*É responsável por calcular o fator balanceamento (definido como a diferença
+     * entre a altura da subárvore esquerda e a altura da subárvore direita de nó)
+     * de um nó na árvore, esse metodo verifica se a ávore está balanceada
+     */
+    int FatorB(No no) {
+        //se for nulo significa que não há sub-árvore nesse lado
         if (no == null)
             return 0;
-        return altura(no.esquerda) - altura(no.direita);
+	        /*Calcula a diferença entre a altura da subárvore esquerda e a altura da subárvore direita do nó,
+	        chamando o método altura (verificar se a árvore esta balanceada)*/
+        return Altura(no.esquerda) - Altura(no.direita);
     }
 
-    No rotacaoDireita(No y) {
+    /*Realiza uma rotação para a direita em torno de um nó específico na árvore AVL
+    balancear quando a direita não estiver balanceada*/
+    No RotacaoDir(No y) {
+        //Cria uma refer// ncia para o filho esquerdo do Nó y, que recebe x
         No x = y.esquerda;
-        No T2 = x.direita;
-
+        //cria o filho direito de x
+        No z = x.direita;
+        //Define y como filho direito de x, tornando o x o novo nó raiz, no lugar de y
         x.direita = y;
-        y.esquerda = T2;
+        //Define T2 como filho esquerdo de y, que era o antigo filho de x
+        y.esquerda = z;
 
-        y.altura = Math.max(altura(y.esquerda), altura(y.direita)) + 1;
-        x.altura = Math.max(altura(x.esquerda), altura(x.direita)) + 1;
+        y.altura = Math.max(Altura(y.esquerda), Altura(y.direita)) + 1;
+        x.altura = Math.max(Altura(x.esquerda), Altura(x.direita)) + 1;
 
         return x;
     }
 
-    No rotacaoEsquerda(No x) {
+    No RotacaoEsq(No x) {
         No y = x.direita;
         No T2 = y.esquerda;
         y.esquerda = x;
         x.direita = T2;
 
-        x.altura = Math.max(altura(x.esquerda), altura(x.direita)) + 1;
-        y.altura = Math.max(altura(y.esquerda), altura(y.direita)) + 1;
+        x.altura = Math.max(Altura(x.esquerda), Altura(x.direita)) + 1;
+        y.altura = Math.max(Altura(y.esquerda), Altura(y.direita)) + 1;
 
         return y;
     }
@@ -51,24 +67,24 @@ public class ArvoreAVL {
             return no;
         }
 
-        no.altura = 1 + Math.max(altura(no.esquerda), altura(no.direita));
+        no.altura = 1 + Math.max(Altura(no.esquerda), Altura(no.direita));
 
-        int fator = fatorBalanceamento(no);
+        int fator = FatorB(no);
 
         if (fator > 1 && palavra.palavra.compareToIgnoreCase(no.esquerda.palavra.palavra) < 0)
-            return rotacaoDireita(no);
+            return RotacaoDir(no);
 
         if (fator < -1 && palavra.palavra.compareToIgnoreCase(no.direita.palavra.palavra) > 0)
-            return rotacaoEsquerda(no);
+            return RotacaoEsq(no);
 
         if (fator > 1 && palavra.palavra.compareToIgnoreCase(no.esquerda.palavra.palavra) > 0) {
-            no.esquerda = rotacaoEsquerda(no.esquerda);
-            return rotacaoDireita(no);
+            no.esquerda = RotacaoEsq(no.esquerda);
+            return RotacaoDir(no);
         }
 
         if (fator < -1 && palavra.palavra.compareToIgnoreCase(no.direita.palavra.palavra) < 0) {
-            no.direita = rotacaoDireita(no.direita);
-            return rotacaoEsquerda(no);
+            no.direita = RotacaoDir(no.direita);
+            return RotacaoEsq(no);
         }
 
         return no;
@@ -108,9 +124,6 @@ public class ArvoreAVL {
     void contarPalavras(No no) {
         contarPalavras(no, null);
     }
-
-
-
 
     void atualizarListaDupla(No no, ListaDupla lista) {
         if (no != null) {
