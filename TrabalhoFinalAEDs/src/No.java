@@ -16,7 +16,7 @@ public class No {
         //Instanciamento de como o atributo "direita" sera iniciado.
         this.direita = null;
         //Instanciamento de como o atributo "altura" sera iniciado.
-        this.altura = 1;
+        this.altura = 0;
     }
 }
 

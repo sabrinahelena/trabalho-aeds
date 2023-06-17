@@ -9,9 +9,8 @@ public class Main {
         ArvoreAVL arvore = new ArvoreAVL();
         ListaDupla lista = new ListaDupla();
 
-
         try {
-            BufferedReader br = new BufferedReader(new FileReader("C:/Users/willi/IdeaProjects/TP/src/TP.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("C:/Users/Sabrina/Desktop/Programação/AEDS-II/trabalho-aeds/TrabalhoFinalAEDs/src/trabalho.txt"));
             String linha;
 
             while ((linha = br.readLine()) != null) {
@@ -29,7 +28,6 @@ public class Main {
         }
 
         arvore.inOrder(arvore.raiz);
-
         arvore.contarPalavras(arvore.raiz, lista);
         arvore.atualizarListaDupla(arvore.raiz, lista);
 

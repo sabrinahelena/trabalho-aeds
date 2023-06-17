@@ -9,7 +9,7 @@ public class ListaDupla {
         } else {
             NoListaDupla atual = inicio; //Se não, pegamos o inicio
             while (atual != null) {
-                if (atual.palavra.palavra.equals(palavra.palavra)) {//compara a palavra passada com a que está no nó atual
+                if (atual.palavra.termo.equals(palavra.termo)) {//compara a palavra passada com a que está no nó atual
                     return;
                 }
                 atual = atual.proximo; //vai passando pra frente
@@ -48,7 +48,7 @@ public class ListaDupla {
     void Imprimir() {
         NoListaDupla atual = inicio;
         while (atual != null) {
-            System.out.println("Palavra:" + " " + atual.palavra.palavra + "Repete: " + atual.palavra.contador + "vezes");
+            System.out.println("Palavra:" + " " + atual.palavra.termo + " Repete: " + atual.palavra.contador + " vez/vezes");
             atual = atual.proximo;
         }
     }

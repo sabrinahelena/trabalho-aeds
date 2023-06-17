@@ -7,7 +7,7 @@ public class ArvoreAVL {
     int Altura(No no) {
         //Se for null não há mais nós na árvore, sendo a altura 0
         if (no == null)
-            return 0;
+            return -1;
         //niveis
         return no.altura;
     }
@@ -39,7 +39,7 @@ public class ArvoreAVL {
         y.altura = Math.max(Altura(y.esquerda), Altura(y.direita)) + 1;
         x.altura = Math.max(Altura(x.esquerda), Altura(x.direita)) + 1;
 
-        return x;
+        return x; //se torna a nova raiz
     }
 
     No RotacaoEsq(No x) {
@@ -51,19 +51,22 @@ public class ArvoreAVL {
         x.altura = Math.max(Altura(x.esquerda), Altura(x.direita)) + 1;
         y.altura = Math.max(Altura(y.esquerda), Altura(y.direita)) + 1;
 
-        return y;
+        return y; //se torna a nova raiz
     }
 
     No inserir(No no, Palavra palavra) {
         if (no == null)
             return (new No(palavra));
-
-        if (palavra.palavra.compareToIgnoreCase(no.palavra.palavra) < 0)
+        /*
+        Compara o termo passado na palavra do parâmetro com o termo que já está dentro da palavra do nó
+        Se for menor, insere à esquerda do nó, e se for maior à direita, seguindo a regra de árvore.
+         */
+        if (palavra.termo.compareToIgnoreCase(no.palavra.termo) < 0)
             no.esquerda = inserir(no.esquerda, palavra);
-        else if (palavra.palavra.compareToIgnoreCase(no.palavra.palavra) > 0)
+        else if (palavra.termo.compareToIgnoreCase(no.palavra.termo) > 0)
             no.direita = inserir(no.direita, palavra);
         else {
-            no.palavra.contador++;
+            no.palavra.contador++; //Se não, aumenta o contador para mostrar que é um termo repetido
             return no;
         }
 
@@ -71,18 +74,18 @@ public class ArvoreAVL {
 
         int fator = FatorB(no);
 
-        if (fator > 1 && palavra.palavra.compareToIgnoreCase(no.esquerda.palavra.palavra) < 0)
+        if (fator > 1 && palavra.termo.compareToIgnoreCase(no.esquerda.palavra.termo) < 0)
             return RotacaoDir(no);
 
-        if (fator < -1 && palavra.palavra.compareToIgnoreCase(no.direita.palavra.palavra) > 0)
+        if (fator < -1 && palavra.termo.compareToIgnoreCase(no.direita.palavra.termo) > 0)
             return RotacaoEsq(no);
 
-        if (fator > 1 && palavra.palavra.compareToIgnoreCase(no.esquerda.palavra.palavra) > 0) {
+        if (fator > 1 && palavra.termo.compareToIgnoreCase(no.esquerda.palavra.termo) > 0) {
             no.esquerda = RotacaoEsq(no.esquerda);
             return RotacaoDir(no);
         }
 
-        if (fator < -1 && palavra.palavra.compareToIgnoreCase(no.direita.palavra.palavra) < 0) {
+        if (fator < -1 && palavra.termo.compareToIgnoreCase(no.direita.palavra.termo) < 0) {
             no.direita = RotacaoDir(no.direita);
             return RotacaoEsq(no);
         }
@@ -96,7 +99,7 @@ public class ArvoreAVL {
 
         int contador = 0;
 
-        if (no.palavra.palavra.equalsIgnoreCase(palavra)) {
+        if (no.palavra.termo.equalsIgnoreCase(palavra)) {
             contador++;
         }
 
@@ -112,7 +115,7 @@ public class ArvoreAVL {
             if (no.palavra.contador > 1) {
                 lista.AdicionarPalavra(no.palavra);
             } else {
-                no.palavra.contador = contarPalavrasRepetidas(no, no.palavra.palavra);
+                no.palavra.contador = contarPalavrasRepetidas(no, no.palavra.termo);
                 if (no.palavra.contador > 1) {
                     lista.AdicionarPalavra(no.palavra);
                 }
@@ -140,7 +143,7 @@ public class ArvoreAVL {
     void inOrder(No no) {
         if (no != null) {
             inOrder(no.esquerda);
-            System.out.println(no.palavra.palavra + " (" + no.palavra.contador + ")");
+            System.out.println(no.palavra.termo + " (" + no.palavra.contador + ")");
             inOrder(no.direita);
         }
     }
