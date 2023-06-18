@@ -6,8 +6,8 @@ import java.io.IOException;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        ArvoreAVL arvore = new ArvoreAVL();
-        ListaDupla lista = new ListaDupla();
+        ArvoreAVL arvoreAVL = new ArvoreAVL();
+        ListaDupla listaDupla = new ListaDupla();
 
         try {
             BufferedReader br = new BufferedReader(new FileReader("C:/Users/Sabrina/Desktop/Programação/AEDS-II/trabalho-aeds/TrabalhoFinalAEDs/src/trabalho.txt"));
@@ -18,7 +18,7 @@ public class Main {
 
                 for (String palavra : palavras) {
                     palavra = palavra.toLowerCase();
-                    arvore.raiz = arvore.inserir(arvore.raiz, new Palavra(palavra));
+                    arvoreAVL.raiz = arvoreAVL.inserir(arvoreAVL.raiz, new Palavra(palavra));
                 }
             }
 
@@ -27,11 +27,11 @@ public class Main {
             e.printStackTrace();
         }
 
-        arvore.inOrder(arvore.raiz);
-        arvore.contarPalavras(arvore.raiz, lista);
-        arvore.atualizarListaDupla(arvore.raiz, lista);
+        arvoreAVL.ImprimirEmOrdem(arvoreAVL.raiz);
+        arvoreAVL.contarPalavras(arvoreAVL.raiz, listaDupla);
+        arvoreAVL.AttListaDupla(arvoreAVL.raiz, listaDupla);
 
-        System.out.println("--- Lista Dupla Encadeada ---");
-        lista.Imprimir();
+        System.out.println("Lista dupla");
+        listaDupla.Imprimir();
     }
 }

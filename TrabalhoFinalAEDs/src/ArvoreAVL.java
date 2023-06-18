@@ -44,9 +44,9 @@ public class ArvoreAVL {
 
     No RotacaoEsq(No x) {
         No y = x.direita;
-        No T2 = y.esquerda;
+        No z = y.esquerda;
         y.esquerda = x;
-        x.direita = T2;
+        x.direita = z;
 
         x.altura = Math.max(Altura(x.esquerda), Altura(x.direita)) + 1;
         y.altura = Math.max(Altura(y.esquerda), Altura(y.direita)) + 1;
@@ -61,12 +61,14 @@ public class ArvoreAVL {
         Compara o termo passado na palavra do parâmetro com o termo que já está dentro da palavra do nó
         Se for menor, insere à esquerda do nó, e se for maior à direita, seguindo a regra de árvore.
          */
-        if (palavra.termo.compareToIgnoreCase(no.palavra.termo) < 0)
+
+        int comparacao = palavra.termo.compareToIgnoreCase(no.palavra.termo);
+        if (comparacao < 0)
             no.esquerda = inserir(no.esquerda, palavra);
-        else if (palavra.termo.compareToIgnoreCase(no.palavra.termo) > 0)
+        else if (comparacao > 0)
             no.direita = inserir(no.direita, palavra);
         else {
-            no.palavra.contador++; //Se não, aumenta o contador para mostrar que é um termo repetido
+            no.palavra.contador++; // Se não, aumenta o contador para mostrar que é um termo repetido
             return no;
         }
 
@@ -124,27 +126,23 @@ public class ArvoreAVL {
             contarPalavras(no.direita, lista);
         }
     }
-    void contarPalavras(No no) {
-        contarPalavras(no, null);
-    }
-
-    void atualizarListaDupla(No no, ListaDupla lista) {
+    void AttListaDupla(No no, ListaDupla lista) {
         if (no != null) {
-            atualizarListaDupla(no.esquerda, lista);
+            AttListaDupla(no.esquerda, lista);
 
             if (no.palavra.contador >= 1) {
                 lista.AdicionarPalavra(no.palavra);
             }
 
-            atualizarListaDupla(no.direita, lista);
+            AttListaDupla(no.direita, lista);
         }
     }
 
-    void inOrder(No no) {
+    void ImprimirEmOrdem(No no) {
         if (no != null) {
-            inOrder(no.esquerda);
-            System.out.println(no.palavra.termo + " (" + no.palavra.contador + ")");
-            inOrder(no.direita);
+            ImprimirEmOrdem(no.esquerda);
+            System.out.println("{ " + no.palavra.contador + " } - " + no.palavra.termo);
+            ImprimirEmOrdem(no.direita);
         }
     }
 }
